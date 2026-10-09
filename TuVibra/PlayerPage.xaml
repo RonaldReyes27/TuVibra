@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuVibra.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TuVibra.PlayerPage"
+             x:DataType="vm:PlayerViewModel"
+             BackgroundColor="#260836"
+             Shell.NavBarIsVisible="False">
+
+    <!-- 3 filas: botón volver (Auto), disco y datos (*), controles (Auto) -->
+    <Grid RowDefinitions="Auto,*,Auto" Padding="24" RowSpacing="16">
+
+        <Button Grid.Row="0"
+                Text="← Volver"
+                Command="{Binding BackCommand}"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                HorizontalOptions="Start"
+                Padding="0" />
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Spacing="16">
+
+            <!-- DiscArea agrupa disco y agujero para animar la entrada;
+                 solo el disco (Disc) gira cuando suena la música -->
+            <Grid x:Name="DiscArea"
+                  WidthRequest="240"
+                  HeightRequest="240"
+                  HorizontalOptions="Center"
+                  Opacity="0"
+                  Scale="0.6">
+                <Border x:Name="Disc"
+                        StrokeShape="Ellipse"
+                        Stroke="#4A1F63"
+                        StrokeThickness="4">
+                    <Image Source="{Binding ArtworkUrl}" Aspect="AspectFill" />
+                </Border>
+                <Border StrokeShape="Ellipse"
+                        Stroke="#4A1F63"
+                        StrokeThickness="2"
+                        BackgroundColor="#260836"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="4">
+                <Label Text="{Binding Title}"
+                       TextColor="White"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="TailTruncation" />
+                <Label Text="{Binding Artist}"
+                       TextColor="#C9B3D9"
+                       FontSize="15"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="{Binding Album}"
+                       TextColor="#A58BB8"
+                       FontSize="12"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="TailTruncation" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="12">
+            <ProgressBar Progress="{Binding Progress}"
+                         ProgressColor="#FF9F43"
+                         BackgroundColor="#3A1250" />
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="{Binding PositionText}" TextColor="#C9B3D9" FontSize="12" />
+                <Label Grid.Column="1" Text="{Binding DurationText}" TextColor="#C9B3D9" FontSize="12" />
+            </Grid>
+            <Button x:Name="PlayButton"
+                    Text="{Binding PlayButtonText}"
+                    Command="{Binding TogglePlayCommand}"
+                    Clicked="OnPlayButtonClicked"
+                    BackgroundColor="#FF9F43"
+                    TextColor="#260836"
+                    FontAttributes="Bold"
+                    CornerRadius="24"
+                    HeightRequest="48"
+                    WidthRequest="180" />
+        </VerticalStackLayout>
+
+        <!-- Reproductor de audio: sin controles propios y casi invisible (1x1);
+             nosotros dibujamos la interfaz -->
+        <toolkit:MediaElement x:Name="MediaPlayer"
+                              Grid.Row="2"
+                              ShouldShowPlaybackControls="False"
+                              ShouldAutoPlay="False"
+                              WidthRequest="1"
+                              HeightRequest="1"
+                              HorizontalOptions="Start"
+                              VerticalOptions="End" />
+    </Grid>
+</ContentPage>

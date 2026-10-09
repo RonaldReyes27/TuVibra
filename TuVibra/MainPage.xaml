@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuVibra.ViewModels"
+             xmlns:models="clr-namespace:TuVibra.Models"
+             x:Class="TuVibra.MainPage"
+             x:DataType="vm:SearchViewModel"
+             BackgroundColor="#260836"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <Entry Placeholder="Buscar una canción..."
+                   Text="{Binding SearchText}"
+                   TextColor="White"
+                   PlaceholderColor="#A58BB8"
+                   ReturnCommand="{Binding SearchCommand}" />
+            <Button Grid.Column="1"
+                    Text="Buscar"
+                    Command="{Binding SearchCommand}"
+                    BackgroundColor="#FF9F43"
+                    TextColor="#260836" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <CollectionView ItemsSource="{Binding Songs}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnSongSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Song">
+                        <Border BackgroundColor="#3A1250"
+                                Stroke="#4A1F63"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 12"
+                                Padding="8"
+                                Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="56,*" ColumnSpacing="12">
+                                <Border StrokeShape="RoundRectangle 8"
+                                        StrokeThickness="0"
+                                        WidthRequest="56"
+                                        HeightRequest="56">
+                                    <Image Source="{Binding ArtworkUrl}" Aspect="AspectFill" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Title}"
+                                           TextColor="White"
+                                           FontAttributes="Bold"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Artist}"
+                                           TextColor="#C9B3D9"
+                                           FontSize="13"
+                                           LineBreakMode="TailTruncation" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <VerticalStackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Spacing="12"
+                                 InputTransparent="True">
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   IsVisible="{Binding IsLoading}"
+                                   Color="#FF9F43" />
+                <Label Text="{Binding Message}"
+                       IsVisible="{Binding HasMessage}"
+                       TextColor="#C9B3D9"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuVibra.ViewModels"
+             x:Class="TuVibra.SplashPage"
+             x:DataType="vm:SplashViewModel"
+             BackgroundColor="#260836"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto,*" Padding="32">
+
+        <VerticalStackLayout Grid.Row="1" Spacing="24" HorizontalOptions="Center">
+
+            <!-- El logo es solo visual: su animación vive en el code-behind (es cosa de la vista) -->
+            <Border x:Name="LogoCard"
+                    StrokeShape="RoundRectangle 24"
+                    StrokeThickness="0"
+                    Padding="0"
+                    Opacity="0"
+                    Scale="0.6">
+                <Image Source="tuvibra_logo"
+                       WidthRequest="320"
+                       Aspect="AspectFit" />
+            </Border>
+
+            <!-- Progress y StatusMessage vienen del ViewModel mediante data binding -->
+            <ProgressBar x:Name="LoadingBar"
+                         Progress="{Binding Progress}"
+                         ProgressColor="#FF9F43"
+                         BackgroundColor="#3A1250"
+                         WidthRequest="240"
+                         Opacity="0" />
+
+            <Label x:Name="StatusLabel"
+                   Text="{Binding StatusMessage}"
+                   TextColor="White"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   Opacity="0" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

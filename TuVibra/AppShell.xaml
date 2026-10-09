@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TuVibra.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TuVibra"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Title="TuVibra">
+
+    <!-- La primera ShellContent es la que se muestra al iniciar: el splash -->
+    <ShellContent
+        Title="Splash"
+        ContentTemplate="{DataTemplate local:SplashPage}"
+        Route="SplashPage" />
+
+    <!-- Pantalla de destino (por ahora MainPage; en el Paso 3 será la búsqueda) -->
+    <ShellContent
+        Title="Inicio"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+</Shell>
